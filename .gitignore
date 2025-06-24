@@ -1,0 +1,45 @@
+# Laravel & PHP
+/vendor
+/public/storage
+/storage/*.key
+.env
+.env.*.backup
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+/.idea
+/.vscode
+/.phpunit.result.cache
+
+# Laravel 8+ Jetstream / Fortify
+/public/hot
+/public/mix-manifest.json
+
+# Laravel Telescope
+/storage/telescope
+
+# Laravel Horizon
+/storage/horizon
+
+# Composer
+composer.lock
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Cache & logs
+/storage/logs
+/storage/framework/cache
+/storage/framework/sessions
+/storage/framework/views
+/storage/framework/testing
+
+# SFTP deployment files
+/deploy.php
+
+# Misc
+*.sublime-workspace
+*.sublime-project

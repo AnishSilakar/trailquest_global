@@ -1,0 +1,80 @@
+
+.bravo_embed_video {
+  width: 100% !important;
+  height: auto;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  display: block;
+}
+     button[type="button"]:not(:disabled),
+button[type="reset"]:not(:disabled),
+button[type="submit"]:not(:disabled),
+button:not(:disabled) {
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 5px !important;
+
+}
+
+@media (min-width: 786px) and (max-width: 992px) {
+
+    .bravo_wrap .holyecotreks_form_search .field-items>.row>div:not(:last-child) {
+        border-right: 1px solid var(--color-border);
+        width: 60%;
+   
+
+    }
+
+    button[type="button"]:not(:disabled),
+    button[type="reset"]:not(:disabled),
+    button[type="submit"]:not(:disabled),
+    button:not(:disabled) {
+        cursor: pointer;
+        padding: 15px !important;
+        border-radius: 5px !important;
+    }
+
+   
+
+}
+@media (max-width: 991px) {
+  .bg-white {
+    margin-right: 0.5rem !important;
+  }
+}
+
+
+.rounded-100 {
+    border-radius: 5px !important;
+}
+@media (max-width: 1199px) {
+.header .header-menu .menu .subnav {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 82%;
+padding-top: 40px;
+}
+}
+@media (max-width: 1199px) {
+.header .header-menu .menu {
+overflow-y: hidden;
+overflow-x: hidden;
+position: relative;
+/* height: 100%; */
+padding: 20px;
+flex-direction: column;
+gap: 88px;
+}
+}
+
+
+
+@media (min-width: 992px) {
+ .bg-white {
+    background-color: var(--color-white) !important;
+    padding-right: 2rem !important ;
+}
+
+}
