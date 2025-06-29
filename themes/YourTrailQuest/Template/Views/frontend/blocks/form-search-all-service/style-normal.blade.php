@@ -200,7 +200,8 @@
                                                     </div>
                                                 </div>
                                             `;
-                                        } else if (q.type === 'paragraph') {
+                                        } 
+                                        else if (q.type === 'paragraph') {
                                             html += `
                                                 <div style="margin-bottom: 24px; color: #444; font-size: 1rem;">
                                                     ${q.options[0].paragraph}
