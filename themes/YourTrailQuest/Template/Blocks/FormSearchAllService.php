@@ -104,6 +104,7 @@ class FormSearchAllService extends \Modules\Template\Blocks\FormSearchAllService
             'boat'   => 'icon-yatch',
             'flight' => 'icon-tickets'
         ];
+        $model['quiz'] = "Quiz will be here";
         return $this->view('Template::frontend.blocks.form-search-all-service.index', $model);
     }
 

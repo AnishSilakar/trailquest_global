@@ -11,7 +11,10 @@ class QuizQuestionAnswers extends BaseModel
     protected $fillable = [
         'answers',
         'is_correct',
-        'core_quiz_questions_id'
+        'core_quiz_questions_id',
+        'paragraph',
+        'range_min',
+        'range_max',
     ];
 
     public function question()

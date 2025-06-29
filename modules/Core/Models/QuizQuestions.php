@@ -22,6 +22,7 @@ class QuizQuestions extends BaseModel
     // Only allow these fields to be mass assignable
     protected $fillable = [
         'questions',
-        'core_quiz_id'
+        'core_quiz_id',
+        'type',
     ];
 }

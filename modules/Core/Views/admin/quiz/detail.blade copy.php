@@ -2,101 +2,104 @@
 
 @section('content')
 <div class="container">
-    <form id="quizForm" method="POST" action="{{ route('core.admin.quiz.store') }}">
+    <h2>{{ isset($quiz) ? 'Edit' : 'Create' }} Quiz</h2>
+
+    <form action="{{ isset($quiz) ? route('core.admin.quiz.update', $quiz->id) : route('core.admin.quiz.store') }}" method="POST">
         @csrf
+        @if(isset($quiz))
+            @method('PUT')
+        @endif
+
+        <!-- Quiz Title -->
         <div class="mb-3">
-            <label for="quizTitle" class="form-label">Quiz Title</label>
-            <input type="text" class="form-control" id="quizTitle" name="title" required>
+            <label class="form-label">Quiz Title</label>
+            <input type="text" name="title" class="form-control" value="{{ old('title', $quiz->title ?? '') }}" required>
         </div>
+
+        <!-- Quiz Description -->
         <div class="mb-3">
-            <label for="quizDescription" class="form-label">Description</label>
-            <textarea class="form-control" id="quizDescription" name="description" rows="3" required></textarea>
+            <label class="form-label">Description</label>
+            <textarea name="description" class="form-control" required>{{ old('description', $quiz->description ?? '') }}</textarea>
         </div>
+
         <hr>
-        <div id="questionsWrapper">
-            <!-- Questions will be added here -->
+        <h4>Questions</h4>
+        <div id="questions-container">
+            @php
+                $questions = old('questions', $quiz->questions ?? []);
+            @endphp
+
+            <!-- Display existing questions if available -->
+            @foreach($questions as $qIndex => $question)
+                <div class="question-block border p-3 mb-3">
+                    <div class="mb-2">
+                        <label>Question</label>
+                        <input type="text" name="questions[{{ $loop->index }}][question]" class="form-control" value="{{ $questions[$qIndex]->questions }}" required>
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Answers</label>
+                        <div class="row">
+                            @foreach(range(0,3) as $aIndex)
+                                <div class="col-md-6 mb-2">
+                                    <input type="text" name="questions[{{ $loop->parent->index }}][answers][]" class="form-control"
+                                           placeholder="Answer {{ $aIndex + 1 }}"
+                                           value="{{ $question['answers'][$aIndex]->answers ?? '' }}" required>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-danger btn-sm remove-question">Remove Question</button>
+                </div>
+            @endforeach
         </div>
-        <button type="button" class="btn btn-sm btn-primary mb-3" onclick="addQuestion()">{{__('Add Question')}}</button>
-        <br>
-        <button type="submit" class="btn btn-success">{{__("Create Quiz")}}</button>
+
+        <button type="button" class="btn btn-secondary" id="add-question">Add Question</button>
+        <br><br>
+        <button type="submit" class="btn btn-primary">{{ isset($quiz) ? 'Update' : 'Create' }} Quiz</button>
     </form>
 </div>
 
-<template id="questionTemplate">
-    <div class="card mb-3 question-block">
-        <div class="card-body">
-            <button type="button" class="btn btn-danger btn-sm float-right d-flex align-items-center my-2 " aria-label="Remove" onclick="removeQuestion(this)">
-                <i class="bi bi-trash-fill text-white"></i> <span class="text-white"><i class="fa fa-trash-o"></i></span>
-            </button>
-            <div class="mb-2">
-                <label class="form-label">Question</label>
-                <input type="text" class="form-control" name="questions[__INDEX__][question]" required>
-            </div>
-            <div class="answersWrapper">
-                <!-- Answers will be added here -->
-            </div>
-            <button type="button" class="btn btn-sm btn-outline-secondary mt-2" onclick="addAnswer(this)">Add Answer</button>
+<!-- Template for new questions -->
+<template id="question-template">
+    <div class="question-block border p-3 mb-3">
+        <div class="mb-2">
+            <label>Question</label>
+            <input type="text" name="questions[__INDEX__][question]" class="form-control" required>
         </div>
+
+        <div class="mb-2">
+            <label>Answers</label>
+            <div class="row">
+                @foreach(range(0,3) as $aIndex)
+                    <div class="col-md-6 mb-2">
+                        <input type="text" name="questions[__INDEX__][answers][]" class="form-control" placeholder="Answer {{ $aIndex + 1 }}" required>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-danger btn-sm remove-question">Remove Question</button>
     </div>
 </template>
-
-<template id="answerTemplate">
-    <div class="input-group mb-2 answer-block">
-        <div class="input-group-text">
-            <input type="checkbox" name="questions[__QINDEX__][answers][__AINDEX__][is_correct]" value="1">
-        </div>
-        <input type="text" class="form-control" name="questions[__QINDEX__][answers][__AINDEX__][answer]" required>
-        <button type="button" class="btn btn-outline-danger" onclick="removeAnswer(this)">Remove</button>
-    </div>
-</template>
-
 
 <script>
-    let questionCount = 0;
+    document.addEventListener('DOMContentLoaded', function () {
+        let questionIndex = {{ count($questions) }};
+        document.getElementById('add-question').addEventListener('click', function () {
+            const template = document.getElementById('question-template').innerHTML;
+            const html = template.replace(/__INDEX__/g, questionIndex);
+            document.getElementById('questions-container').insertAdjacentHTML('beforeend', html);
+            questionIndex++;
+        });
 
-    function addQuestion() {
-        const qTemplate = document.getElementById('questionTemplate').content.cloneNode(true);
-        const qHtml = qTemplate.querySelector('.question-block');
-        const qIndex = questionCount++;
-        // Update question input name
-        qHtml.querySelector('input[name^="questions"]').name = `questions[${qIndex}][question]`;
-        // Add first two answers by default
-        const answersWrapper = qHtml.querySelector('.answersWrapper');
-        for (let i = 0; i < 4; i++) {
-            answersWrapper.appendChild(createAnswer(qIndex, i));
-        }
-        qHtml.querySelector('button[onclick^="addAnswer"]').setAttribute('data-qindex', qIndex);
-        document.getElementById('questionsWrapper').appendChild(qHtml);
-    }
-
-    function removeQuestion(btn) {
-        btn.closest('.question-block').remove();
-    }
-
-    function addAnswer(btn) {
-        const qBlock = btn.closest('.question-block');
-        const qIndex = Array.from(document.getElementById('questionsWrapper').children).indexOf(qBlock);
-        const answersWrapper = qBlock.querySelector('.answersWrapper');
-        const aIndex = answersWrapper.children.length;
-        answersWrapper.appendChild(createAnswer(qIndex, aIndex));
-    }
-
-    function removeAnswer(btn) {
-        btn.closest('.answer-block').remove();
-    }
-
-    function createAnswer(qIndex, aIndex) {
-        const aTemplate = document.getElementById('answerTemplate').content.cloneNode(true);
-        const checkbox = aTemplate.querySelector('input[type="checkbox"]');
-        const input = aTemplate.querySelector('input[type="text"]');
-        checkbox.name = `questions[${qIndex}][answers][${aIndex}][is_correct]`;
-        input.name = `questions[${qIndex}][answers][${aIndex}][answer]`;
-        return aTemplate;
-    }
-
-    // Add first question on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        addQuestion();
+        document.getElementById('questions-container').addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-question')) {
+                e.target.closest('.question-block').remove();
+            }
+        });
     });
 </script>
+
 @endsection

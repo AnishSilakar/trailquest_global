@@ -12,6 +12,8 @@ use Modules\News\Models\NewsCategory;
 use Modules\Page\Models\Template;
 use Illuminate\Support\Facades\Validator;
 use Modules\Core\Models\QuizQuestionAnswers;
+use Modules\Core\Models\QuizSubmission;
+use Modules\Core\Models\QuizSubmissionAnswers;
 
 class QuizController extends AdminController
 {
@@ -28,6 +30,11 @@ class QuizController extends AdminController
             'rows'           => Quiz::paginate(20),
         ];
         return view('Core::admin.quiz.index', $data);
+    }
+
+    public function getFirst()
+    {
+        return Quiz::with('questions', 'questions.answers')->offset(0)->limit(1)->get();
     }
 
     public function getLocations()
@@ -257,7 +264,16 @@ class QuizController extends AdminController
             'description' => 'nullable|string',
             'questions' => 'required|array|min:1',
             'questions.*.question' => 'required|string',
-            'questions.*.answers' => 'required|array|min:2',
+            'questions.*' => [
+                function ($attribute, $value, $fail) {
+                    $hasAnswers = !empty($value['answers']) && is_array($value['answers']) && count($value['answers']) > 0;
+                    $hasParagraph = !empty($value['paragraph']);
+                    $hasRange = isset($value['range_min']) && isset($value['range_max']) && $value['range_min'] !== null && $value['range_max'] !== null;
+                    if (!$hasAnswers && !$hasParagraph && !$hasRange) {
+                        $fail("Each question must have either answers, a paragraph, or both range_min and range_max.");
+                    }
+                }
+            ],
         ];
         $data = $request->all();
         $validator = Validator::make($data, $rules);
@@ -280,13 +296,35 @@ class QuizController extends AdminController
             $quiz_questions = QuizQuestions::create([
                 'core_quiz_id' => $quiz->id,
                 'questions' => $question['question'],
+                'type' => $question['type'],
+
             ]);
-            foreach ($question['answers'] as $answer) {
+            if ($question['type'] == 'paragraph') {
+                // Store paragraph or print it as needed
+                // Example: save as a special answer type
                 QuizQuestionAnswers::create([
-                    'answers' => $answer,
-                    'is_correct' =>  0,
+                    'paragraph' => $question['paragraph'],
+                    'is_correct' => 0,
                     'core_quiz_questions_id' => $quiz_questions->id,
                 ]);
+            } elseif ($question['type'] == 'range') {
+                // Insert range_min and range_max if present
+                if (isset($question['range_min']) && isset($question['range_max'])) {
+                    QuizQuestionAnswers::create([
+                        'range_min' => $question['range_min'],
+                        'range_max' => $question['range_max'],
+                        'is_correct' => 0,
+                        'core_quiz_questions_id' => $quiz_questions->id,
+                    ]);
+                }
+            } else {
+                foreach ($question['answers'] as $answer) {
+                    QuizQuestionAnswers::create([
+                        'answers' => $answer,
+                        'is_correct' =>  0,
+                        'core_quiz_questions_id' => $quiz_questions->id,
+                    ]);
+                }
             }
         }
         return $quiz;
@@ -308,10 +346,10 @@ class QuizController extends AdminController
                 foreach ($ids as $id) {
                     $query = Quiz::where("id", $id);
                     $query->where("create_user", Auth::id());
-//                    if (!$this->hasPermission('menu_update')) {
-//                        $query->where("create_user", Auth::id());
-//                        $this->checkPermission('menu_delete');
-//                    }
+                    //                    if (!$this->hasPermission('menu_update')) {
+                    //                        $query->where("create_user", Auth::id());
+                    //                        $this->checkPermission('menu_delete');
+                    //                    }
                     $row = $query->first();
                     if (!empty($row)) {
                         $row->delete();
@@ -320,5 +358,63 @@ class QuizController extends AdminController
                 return redirect()->back()->with('success', __('Deleted success!'));
                 break;
         }
+    }
+
+    public function submitQuiz(Request $request)
+    {
+        $data = $request->all();
+        // Validate input
+        $validator = Validator::make($data, [
+            'answers' => 'required|array',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'contact' => 'nullable|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $data = [
+            'answers' => json_encode($data['answers']),
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'contact' => $data['contact'],
+        ];
+
+        // generate the result based the answers Selection
+        $result = 'You are guts and glory, ready to conquer the world with your adventurous spirit!';
+
+        $data['quiz_id'] = $this->getFirst()->first()->id ?? null;
+        $quizSubmission =  QuizSubmission::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'contact' => $data['contact'],
+            'quiz_id' => $data['quiz_id'],
+            'result' => $result,
+        ]);
+
+
+        $data = json_decode($data['answers'], true);
+
+        // Loop through the associative array
+        $rangeQuestion = QuizQuestions::where('type', 'range')->pluck('id')->toArray();
+        foreach ($data as $key => $value) {
+            $insertData = [
+                'question_id' => $key,
+                'answers_id' => null, // Default to null, will be set if answer is not a range
+                'quiz_submission_id' => $quizSubmission->id,
+                'range_value' => null, // Default to null, will be set if answer is a range
+            ];
+            if (in_array($key, $rangeQuestion)) {
+                $insertData['range_value'] = $value; // Set the range value
+            } else {
+                $answers = QuizQuestionAnswers::where('core_quiz_questions_id', $key)->get();
+                $insertData['answers_id'] = $answers[$value]->id;
+            }
+            QuizSubmissionAnswers::create($insertData);
+        }
+
+        return response()->json(['result' => $result]);
     }
 }

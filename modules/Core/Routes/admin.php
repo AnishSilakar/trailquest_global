@@ -37,6 +37,7 @@ Route::group(['prefix' => 'menu'], function () {
 
 Route::group(['prefix' => 'quiz'], function () {
     Route::get('/', 'QuizController@index')->name('core.admin.quiz.index'); //Anish
+    // Route::get('/getFirst', 'QuizController@getFirst')->name('core.admin.quiz.getFirst');
     Route::get('/create', 'QuizController@create')->name('core.admin.quiz.create');//Anish
     Route::post('/store', 'QuizController@store')->name('core.admin.quiz.store');
     Route::get('/edit/{id}', 'QuizController@edit')->name('core.admin.quiz.edit');

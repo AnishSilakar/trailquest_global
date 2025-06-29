@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Artisan;
 use \Illuminate\Support\Facades\Route;
+use Modules\Core\Admin\QuizController;
 
 Route::get('/check-cookie','CookieController@saveCookie')->name('core.cookie.check');
 Route::get('/custom-css','StyleController@customCss')->name('core.style.customCss');
@@ -15,3 +16,7 @@ Route::get('sitemap.xml','SitemapController@index')->name('sitemap.index');
 Route::get('sitemap-{id}.xml','SitemapController@path')->name('sitemap.path');
 
 Route::get('tools/clear-cache', 'ToolsController@clearCache')->name('core.tool.clearCache');
+
+Route::get('quiz/getFirst', [QuizController::class, 'getFirst'])->name('core.admin.quiz.getFirst');
+
+Route::post('quiz/submit', [QuizController::class, 'submitQuiz'])->name('core.quiz.submit');

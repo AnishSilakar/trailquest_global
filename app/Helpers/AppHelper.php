@@ -16,7 +16,7 @@ define( 'YEAR_IN_SECONDS', 365 * DAY_IN_SECONDS );
 function setting_item($item,$default = '',$isArray = false){
 
     $res = Settings::item($item,$default);
-
+    
     if($isArray and !is_array($res)){
         $res = (array) json_decode($res,true);
     }
