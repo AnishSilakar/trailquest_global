@@ -178,7 +178,8 @@
                                                 `;
                                             });
                                             html += `</ul>`;
-                                        } else if (q.type === 'range') {
+                                        } 
+                                        else if (q.type === 'range') {
                                             // Assume only one answer object with range_min and range_max
                                             const min = q.options[0].range_min;
                                             const max = q.options[0].range_max;
