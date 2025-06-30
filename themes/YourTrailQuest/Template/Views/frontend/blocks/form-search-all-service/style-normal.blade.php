@@ -149,8 +149,7 @@
                                                     font-size: 1.08rem;
                                                     text-align: left;
                                                     font-weight: 500;
-                                                ">${q.question}</p>
-                                        `;
+                                                ">${q.question}</p>`;
                                         // Render by type
                                         if (q.type === 'options' || !q.type) {
                                             html += `<ul style="list-style:none; padding:0; margin-bottom: 24px;">`;
