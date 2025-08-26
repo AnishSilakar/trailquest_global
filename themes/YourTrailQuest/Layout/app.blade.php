@@ -29,6 +29,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@900&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/pacifico" rel="stylesheet"> 
     <link rel="stylesheet" href="{{ asset('themes/yourtrailquest/dist/frontend/css/app.css?_v='.config('app.asset_version')) }}">
     {!! \App\Helpers\Assets::css() !!}
     {!! \App\Helpers\Assets::js() !!}
@@ -53,7 +54,9 @@
     <div class="bravo_wrap overflow-hidden">
         @if(!empty($row))
             @php $hideHeaderMargin = ['transparent','transparent_v2','transparent_v3','transparent_v4','transparent_v5','transparent_v6','transparent_v7','transparent_v8','transparent_v9'] @endphp
-            @if(!in_array($row->header_style,$hideHeaderMargin)) <div class="header-margin"></div> @endif
+            @if(isset($row->header_style) && !in_array($row->header_style, $hideHeaderMargin))
+                <div class="header-margin"></div>
+            @endif
         @else
             @if(empty($hide_header_margin)) <div class="header-margin"></div> @endif
         @endif

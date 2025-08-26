@@ -24,5 +24,9 @@ class QuizQuestions extends BaseModel
         'questions',
         'core_quiz_id',
         'type',
+        'oneliner',
+        'onelinerFooter',
+        'icon',
+        'affect_result'
     ];
 }

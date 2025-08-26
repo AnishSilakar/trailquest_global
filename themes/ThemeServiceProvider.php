@@ -49,7 +49,6 @@ class ThemeServiceProvider extends ServiceProvider
 
         // Base Theme require
         View::addLocation(base_path(DIRECTORY_SEPARATOR."themes".DIRECTORY_SEPARATOR."Base"));
-
         // Load modules views
         $this->loadModuleViews('base');
 

@@ -57,6 +57,7 @@ class HomeController extends Controller
             ],
             "seo_meta" => News::getSeoMetaForPageList()
         ];
+        var_dump($data);
         return view('News::frontend.index',$data);
     }
 

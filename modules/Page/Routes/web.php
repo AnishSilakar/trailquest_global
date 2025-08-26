@@ -15,3 +15,10 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix'=>config('page.page_route_prefix')],function(){
     Route::get('/{slug?}','PageController@detail')->name('page.detail');// Detail
 });
+
+
+// Page
+Route::group(['prefix'=>config('page.custom_route_prefix')],function(){
+    Route::get('/quiz', 'PageController@quiz')->name('page.quiz');
+    Route::post('/share-stories', 'MediaController@shareStories')->name('quiz.share_stories');
+});

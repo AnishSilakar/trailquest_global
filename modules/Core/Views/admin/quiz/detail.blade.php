@@ -4,7 +4,7 @@
 <div class="container">
     <h2>{{ isset($quiz) ? 'Edit' : 'Create' }} Quiz</h2>
 
-    <form id="quiz-form" action="{{ isset($quiz) ? route('core.admin.quiz.update', $quiz->id) : route('core.admin.quiz.store') }}" method="POST">
+    <form id="quiz-form" action="{{ isset($quiz) ? route('core.admin.quiz.update', $quiz->id) : route('core.admin.quiz.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @if(isset($quiz))
             @method('PUT')
@@ -21,6 +21,18 @@
             <label class="form-label">Description</label>
             <textarea name="description" class="form-control" id="quiz-description" required>{{ old('description', $quiz->description ?? '') }}</textarea>
         </div>
+
+        <!-- Quiz Logo One Liner -->
+         <div class="mb-3">
+            <label class="form-label">One Liner</label>
+            <input type="text" name="oneliner" class="form-control" value="{{ old('oneliner', $quiz->oneliner ?? '')}}" required>
+         </div>
+
+         <!-- Quiz Icon -->
+          <div class="mb-3">
+            <label class="form-label">Icon</label>
+            <input type="file" name="icon" class="form-control" accept="image/*"/>
+          </div>
 
         <hr>
         <h4>Questions</h4>
@@ -69,7 +81,7 @@
                         $type = $question['type'] ?? 'options';
                     }
                 @endphp
-                <div class="question-block border p-3 mb-3">
+                 <div class="question-block border p-3 mb-3">
                     <div class="mb-2">
                         <label>Question</label>
                         <input type="text" name="questions[{{ $loop->index }}][question]" class="form-control" value="{{ $question['question'] ?? '' }}" required>
@@ -129,6 +141,21 @@
 <template id="question-template">
     <div class="question-block border p-3 mb-3">
         <div class="mb-2">
+            <label >Icon</label>
+            <input type="file" class="form-control" name="questions[__INDEX__][icon]" required>
+        </div>
+
+        <div class="mb-2">
+            <label> One Liner </label>
+            <input type="text" name="questions[__INDEX__][oneliner]" class="form-control">
+        </div>
+
+        <div class="mb-2">
+            <label> Footer One Liner </label>
+            <input type="text" name="questions[__INDEX__][onelinerFooter]" class="form-control">
+        </div>
+
+        <div class="mb-2">
             <label>Question</label>
             <input type="text" name="questions[__INDEX__][question]" class="form-control" required>
         </div>
@@ -140,6 +167,7 @@
                 <option value="paragraph">Paragraph</option>
                 <option value="range">Range</option>
             </select>
+            <span style="float: right;">Affect Result: <input type="checkbox" class="form-control" name="questions[__INDEX__][affect_result]" checked></span>
         </div>
 
         <div class="mb-2 question-options">

@@ -39,6 +39,8 @@ class ThemeProvider extends \Themes\Base\ThemeProvider
         $this->app->register(\Themes\YourTrailQuest\Tour\ModuleProvider::class); 
         $this->app->register(\Themes\YourTrailQuest\Contact\ModuleProvider::class); 
         $this->app->register(\Themes\YourTrailQuest\Core\ModuleProvider::class);
+        //anish Added
+        $this->app->register(\Themes\YourTrailQuest\Quiz\ModuleProvider::class);
         // $this->app->register(\Themes\YourTrailQuest\Vendor\ModuleProvider::class); 
         // $this->app->register(UpdaterProvider::class);
     }

@@ -17,6 +17,9 @@ class Quiz extends BaseModel
     protected $fillable = [
         'title',
         'description',
+        'oneliner',
+        'icon',
+        'buttonTxt'
     ];
     
 }

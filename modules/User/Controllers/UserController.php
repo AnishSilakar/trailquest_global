@@ -233,5 +233,8 @@ class UserController extends FrontendController
 
     }
 
+    public function renderQuiz(){
+        return "data";
+    }
 
 }

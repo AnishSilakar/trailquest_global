@@ -74,3 +74,6 @@ Route::get('/plan/thank-you','PlanController@thankYou')->name('user.plan.thank-y
 Route::get('/user/plan/buy/{id}','PlanController@buy')->name('user.plan.buy')->middleware(['auth', 'verified']);
 Route::post('/user/plan/buyProcess/{id}','PlanController@buyProcess')->name('user.plan.buyProcess')->middleware(['auth', 'verified']);
 
+//Anish Added
+// Route::get('/quiz', 'QuizController@renderQuiz')->name('quiz.render');
+

@@ -16,8 +16,8 @@ Route::group(['middleware' => ['auth'],'prefix' => config('admin.admin_route_pre
 
     Route::post('/media/folder','FolderController@index')->name('media.folder.index');
 });
-Route::group(['middleware' => ['auth'],'prefix' => 'media'],function(){
+// Route::group(['middleware' => ['auth'],'prefix' => 'media'],function(){
     Route::get('/folder','FolderController@index')->name('media.folder.index');
     Route::post('/folder/store','FolderController@store')->name('media.folder.store');
     Route::post('/folder/delete','FolderController@delete')->name('media.folder.delete');
-});
+// });

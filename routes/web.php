@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
- use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
     /*
     |--------------------------------------------------------------------------
     | Web Routes
@@ -22,6 +23,12 @@ Route::get('/clear-cache', function() {
     Artisan::call('route:clear');
     
     return response()->json(['message' => 'Cache, config, view, and route caches cleared!']);
+});
+
+//clear cache
+Route::get('/quiz-clear', function() {
+    Cache::forget('quiz-data');
+    return response()->json(['message' => 'Quiz  cache cleared!']);
 });
 
 Route::get('/clear-config', function() {

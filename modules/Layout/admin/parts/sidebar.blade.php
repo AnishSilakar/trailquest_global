@@ -10,7 +10,7 @@ $menus = [
         "position" => 60,
         'url'        => route('core.admin.quiz.index'),
         'title'      => __("Quiz"),
-        'icon'       => 'icon ion-ios-apps',
+        'icon'       => 'icon ion-ios-play',
         'permission' => 'quiz_view',
     ],
     'menu' => [

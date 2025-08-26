@@ -2,8 +2,10 @@
 
 namespace Modules\Core\Admin;
 
+use App\Mail\ContactFormMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Modules\AdminController;
 use Modules\Core\Models\Quiz;
 use Modules\Core\Models\MenuTranslation;
@@ -14,6 +16,9 @@ use Illuminate\Support\Facades\Validator;
 use Modules\Core\Models\QuizQuestionAnswers;
 use Modules\Core\Models\QuizSubmission;
 use Modules\Core\Models\QuizSubmissionAnswers;
+use Illuminate\Support\Facades\DB;
+use Modules\Tour\Models\Tour;
+use Modules\Tour\Models\TourCategory;
 
 class QuizController extends AdminController
 {
@@ -281,22 +286,39 @@ class QuizController extends AdminController
             return redirect()->route('core.admin.quiz.index')->with('success', __('Quiz Error!'));
         }
 
-        $this->updateOrStore($data);
+        $this->updateOrStore($data, $request);
 
         return redirect()->route('core.admin.quiz.index')->with('success', __('Quiz created successfully!'));
     }
 
-    public function updateOrStore($data)
+    public function updateOrStore($data, $request)
     {
+        $icon = '';
+        if ($request->hasFile('icon')) {
+            $file = $request->file('icon');
+            $icon = $file->store('0000/quizzes', 'uploads') ?? '';
+        }
         $quiz = Quiz::create([
             'title' => $data['title'],
             'description' => $data['description'],
+            'oneliner' => $data['oneliner'],
+            'icon' => $icon,
+            // 'buttonTxt' => $data['buttonTxt']
         ]);
-        foreach ($data['questions'] as $question) {
+        foreach ($data['questions'] as $index => $question) {
+            $newIcon = '';
+            if ($request->hasFile("questions.$index.icon")) {
+                $file = $request->file("questions.$index.icon");
+                $newIcon = $file->store('0000/quizzes', 'uploads') ?? '';
+            }
             $quiz_questions = QuizQuestions::create([
                 'core_quiz_id' => $quiz->id,
                 'questions' => $question['question'],
                 'type' => $question['type'],
+                'affect_result' => isset($question['affect_result']) ? 1 : 0,
+                'oneliner' => $question['oneliner'],
+                'onelinerFooter' => $question['onelinerFooter'],
+                'icon' => $newIcon
 
             ]);
             if ($question['type'] == 'paragraph') {
@@ -382,16 +404,13 @@ class QuizController extends AdminController
             'contact' => $data['contact'],
         ];
 
-        // generate the result based the answers Selection
-        $result = 'You are guts and glory, ready to conquer the world with your adventurous spirit!';
-
         $data['quiz_id'] = $this->getFirst()->first()->id ?? null;
         $quizSubmission =  QuizSubmission::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'contact' => $data['contact'],
             'quiz_id' => $data['quiz_id'],
-            'result' => $result,
+            'result' => "",
         ]);
 
 
@@ -399,6 +418,26 @@ class QuizController extends AdminController
 
         // Loop through the associative array
         $rangeQuestion = QuizQuestions::where('type', 'range')->pluck('id')->toArray();
+
+        // Get id of price range question
+        $lastQuestion = optional(QuizQuestions::where('core_quiz_id', $quizSubmission['quiz_id'])
+                        ->orderBy('id', 'desc') // or 'created_at', depending on your table
+                        ->first())->id;
+        $result = [];
+       if (array_key_exists($lastQuestion, $data)) {
+            $value = $data[$lastQuestion];
+           // loop here and get price range
+            $opionsData = QuizQuestionAnswers::where('core_quiz_questions_id', $lastQuestion)->get();
+            $selectPrice = $opionsData[$value];
+           $resValue = $this->getMinMaxPrice($selectPrice->answers);
+        } else {
+            echo "Key 20 does not exist.";
+        }
+        $result = $this->logicForResult($data, $rangeQuestion, $resValue['min'], $resValue['max']);
+        //store the result in quiz_submission
+        $quizSubmission->result = json_encode($result);
+        $quizSubmission->save();
+
         foreach ($data as $key => $value) {
             $insertData = [
                 'question_id' => $key,
@@ -414,7 +453,159 @@ class QuizController extends AdminController
             }
             QuizSubmissionAnswers::create($insertData);
         }
-
+        // send mail
+        try {
+            Mail::to('anishsilakar5@gmail.com')->send(new ContactFormMail([
+                'name' => $quizSubmission['name'],
+                'email' => $quizSubmission['email'],
+                'phone' => $quizSubmission['contact'],
+            ]));
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+        }
         return response()->json(['result' => $result]);
+    }
+
+    public function getMinMaxPrice($selectedOption){
+        $min = null;
+        $max = null;
+
+        // Extract all numbers
+        preg_match_all('/\d+/', $selectedOption, $matches);
+        $prices = array_map('intval', $matches[0]);
+
+        if (stripos($selectedOption, 'Above') !== false && count($prices) >= 1) {
+            $min = $prices[0];
+            $max = null; // open-ended upper range
+        } elseif (count($prices) === 2) {
+            [$min, $max] = $prices;
+        } elseif (count($prices) === 1) {
+            $min = $prices[0];
+            $max = $prices[0]; // single fixed value
+        }
+       return $afterValue = [ 'min' => $min, 'max' => $max];
+    }
+
+    public function logicForResult($firstArray, $secondArray, $min, $max)
+    {
+        $comparedArray = array_filter(
+            $firstArray,
+            function ($value, $key) use ($secondArray) {
+                return !in_array($key, $secondArray);
+            },
+            ARRAY_FILTER_USE_BOTH
+        );
+
+        // Logics to filter based on affect_result or not
+        $newArray = [];
+        foreach ($comparedArray as $key => $value) {
+            $check = QuizQuestions::where('id', $key)->first();
+            if ($check && $check->affect_result) {
+                $newArray[$key] = $value;
+            }
+        }
+
+        // Count the frequency of each value
+        $frequency = array_count_values($newArray);
+
+        // Find the value with the highest repetition
+        $maxCount = max($frequency);
+        $mostRepeatedValues = array_keys($frequency, $maxCount);
+
+        // Assuming you want the first most repeated value if multiple tied
+        $mostRepeatedValue = $mostRepeatedValues[0];
+
+        // Print message based on the most repeated value
+        $type = "";
+        $element = "";
+        $focus = "";
+        $message = "";
+        $group = "";
+        switch ($mostRepeatedValue) {
+            case 0:
+                $type = "The Daring"; //Push Your Limits
+                $group = "Push Your Limits";
+                $element = "&#x1F525;"; // Fire emoji
+                $focus = "You Burn Bright.";
+                $message = " You’re wired for challenge. The steeper the climb, the stronger your will. You don’t just push limits—you redefine them. You’re here to rise, to roar, and to lead the charge. This is your moment. Take the leap.";
+                break;
+            case 1:
+                $type = "The Dreamer"; //Reconnect with Nature
+                $group = "Reconnect With Nature";
+                $element = "&#x1F4A8;"; // Wind emoji
+                $focus = "You Breathe Possibility.";
+                $message = " Your soul drifts where the wild wind calls. You’re drawn to open skies, quiet trails, and the kind of silence that speaks. You move lightly but think deeply. For you, every step is a chance to imagine more. So go where you feel most free.";
+                break;
+            case 2:
+                $type = "The Grounded"; //Declutter Your Mind
+                $group = "Declutter Your Mind";
+                $element = "&#x1F30E;"; // Earth emoji
+                $focus = "You don’t rush. You root.";
+                $message = " When the world spins fast, you slow things down. You find strength in stillness and clarity in the quiet. You’re grounded, steady, and real. The noise out there? It doesn’t shake you. You know your pace. And you trust your path.";
+                break;
+            case 3:
+                $type = "The Rebel"; // Explore the Ancient
+                $group = "Explore The Ancients";
+                $element = "&#x1F30A;"; // Water emoji
+                $focus = "You Flow Your Own Way.";
+                $message = " Rules? You rewrite them. Paths? You carve your own. You’re fluid, fearless, and full of surprise. Adventure isn’t a plan—it’s a feeling. You trust your gut, ride the current, and dive deep when others stay shallow. Stay wild.";
+                break;
+            default:
+                break;
+        }
+        $tours = $this->getTours($group, $min, $max);
+        return [
+            'type' => $type,
+            'element' => $element,
+            'focus' => $focus,
+            'message' => $message,
+            'tours' => $tours,
+        ];
+    }
+
+    public function getTours($group , $min, $max)
+    {
+        // dd($min, $max);
+        $mainCategory = DB::table('bravo_tour_category as btc')
+            ->join('bravo_tour_category as bt', 'bt.id', '=', 'btc.parent_id')
+            ->whereNotNull('btc.parent_id')
+            ->where('btc.status', 'Publish')
+            ->where('bt.name', $group)
+            ->whereNull('btc.deleted_at')
+            ->select(DB::raw('DISTINCT btc.parent_id'), 'bt.name')
+            ->groupBy('btc.parent_id', 'bt.name') // include bt.name in groupBy to avoid SQL errors in strict mode
+            ->first();
+        $id = $mainCategory->parent_id ?? null;
+        $subCategories = TourCategory::where('parent_id', $id)
+            ->where('status', 'Publish')
+            ->whereNull('deleted_at')
+            ->get();
+        $tours = [];
+        if ($subCategories->isNotEmpty()) {
+            foreach ($subCategories as $subCategory) {
+                $tourQuery = Tour::where('category_id', $subCategory->id)
+                    ->where('status', 'Publish')
+                    ->whereNull('deleted_at')
+                    ->where('sale_price', '>', $min);
+
+                if (!is_null($max)) {
+                    $tourQuery->where('sale_price', '<', $max);
+                }
+
+                $tourResult = $tourQuery->inRandomOrder()->first();
+                if ($tourResult) {
+                    $tours[] = [
+                        'id' => $tourResult->id,
+                        'title' => $tourResult->title,
+                        'slug' => $tourResult->slug,
+                        'image' => get_file_url($tourResult->image_id, 'full'),
+                        'category_name' => $subCategory->name,
+                        'sale_price' => $tourResult->sale_price, 
+                        'duration' => $tourResult->duration
+                    ];
+                }
+            }
+        }
+        return $tours;
     }
 }
