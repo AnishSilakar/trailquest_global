@@ -315,11 +315,12 @@
         font-size: 14px;
     }
 
-    .result-date, .brand{
+    .result-date,
+    .brand {
         font-weight: 800;
     }
 
-    .result-date .date-normal{
+    .result-date .date-normal {
         font-weight: 400;
     }
 
@@ -369,7 +370,7 @@
         margin-bottom: 20px;
     }
 
-    .compass-container img{
+    .compass-container img {
         height: 120px;
     }
 
@@ -387,6 +388,10 @@
         font-size: 48px;
         color: #333;
         font-weight: normal;
+    }
+
+    .logo-result {
+        width: 250px;
     }
 
     .logo-tagline {
@@ -471,7 +476,7 @@
         text-decoration: none;
     }
 
-    .website-link .globe-icon{
+    .website-link .globe-icon {
         color: #000008;
     }
 
@@ -498,83 +503,85 @@
     }
 
     .journey-card {
-    position: relative;
-    border: 1px solid #eee;
-    padding: 16px;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    overflow: hidden;
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
+        position: relative;
+        border: 1px solid #eee;
+        padding: 16px;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        overflow: hidden;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
 
-.journey-image {
-    width: 100%;
-    border-radius: 6px;
-    object-fit: cover;
-}
+    .journey-image {
+        width: 100%;
+        border-radius: 6px;
+        object-fit: cover;
+    }
 
-.journey-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin: 0;
-    text-align: center;
-}
+    .journey-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin: 0;
+        text-align: center;
+    }
 
-/* Ribbon Styles */
-/* Ribbon Styles */
-.ribbon {
-    position: absolute;
-    top: 16px;
-    padding: 6px 12px;
-    color: #fff;
-    font-size: 0.85rem;
-    font-weight: bold;
-    z-index: 2;
-    background: linear-gradient(to right, #e53935, #b71c1c); /* Red gradient */
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-    line-height: 1;
-}
+    /* Ribbon Styles */
+    /* Ribbon Styles */
+    .ribbon {
+        position: absolute;
+        top: 16px;
+        padding: 6px 12px;
+        color: #fff;
+        font-size: 0.85rem;
+        font-weight: bold;
+        z-index: 2;
+        background: linear-gradient(to right, #e53935, #b71c1c);
+        /* Red gradient */
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        line-height: 1;
+    }
 
-/* Left Ribbon with V-Cut on Right */
-.ribbon-left {
-    left: 0;
-    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
-    border-radius: 0 4px 4px 0;
-}
+    /* Left Ribbon with V-Cut on Right */
+    .ribbon-left {
+        left: 0;
+        clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
+        border-radius: 0 4px 4px 0;
+    }
 
-/* Right Ribbon with V-Cut on Left */
-.ribbon-right {
-    right: 0;
-    background: linear-gradient(to left, #28a745, #1e7e34); /* Green gradient */
-    clip-path: polygon(10px 0, 100% 0, 100% 100%, 10px 100%, 0 50%);
-    border-radius: 4px 0 0 4px;
-}
+    /* Right Ribbon with V-Cut on Left */
+    .ribbon-right {
+        right: 0;
+        background: linear-gradient(to left, #28a745, #1e7e34);
+        /* Green gradient */
+        clip-path: polygon(10px 0, 100% 0, 100% 100%, 10px 100%, 0 50%);
+        border-radius: 4px 0 0 4px;
+    }
 
 
-/* Read More Button as Footer */
-.read-more-button {
-    text-align: center;
-    padding: 12px;
-    background-color: #343a40;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: bold;
-    transition: background 0.2s ease-in-out;
-    margin-top: auto;
-}
+    /* Read More Button as Footer */
+    .read-more-button {
+        text-align: center;
+        padding: 12px;
+        background-color: #343a40;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+        transition: background 0.2s ease-in-out;
+        margin-top: auto;
+    }
 
-.read-more-button:hover {
-    background-color: #212529;
-}
+    .read-more-button:hover {
+        background-color: #212529;
+    }
 
-.full-width {
-    width: 100%;
-    display: block;
-}
+    .full-width {
+        width: 100%;
+        display: block;
+    }
 
 
     /* .journey-card {
@@ -585,8 +592,8 @@
         box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
         display: flex;
         flex-direction: column;
-        /* Optional: set a minimum height or consistent card height */
-    }
+        /* Optional: set a minimum height or consistent card height 
+    } */
 
 
     .journey-image {
@@ -625,7 +632,84 @@
     .read-more-button:hover {
         background-color: #c53030;
         color: #FFFFFF;
-    } */
+    }
+
+    /* Import Font Awesome */
+    /* @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'); */
+
+    .modern-footer {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 24px;
+        background-color: #f8f9fa;
+        border-top: 1px solid #ddd;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .website-link {
+        font-size: 16px;
+        color: #333;
+        text-decoration: none;
+        margin-bottom: 16px;
+        font-weight: 600;
+    }
+
+    .website-link:hover {
+        text-decoration: underline;
+    }
+
+    .share-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .share-label {
+        font-weight: 600;
+        font-size: 15px;
+        color: #444;
+    }
+
+    /* Share Buttons */
+    .share-button {
+        border: none;
+        background-color: #eee;
+        color: white;
+        width: 38px;
+        height: 38px;
+        border-radius: 6px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .share-button i {
+        font-size: 16px;
+    }
+
+    /* Platform Colors */
+    .share-button.linkedin {
+        background-color: #0077b5;
+    }
+
+    .share-button.facebook {
+        background-color: #1877f2;
+    }
+
+    .share-button.twitter {
+        background-color: #1da1f2;
+    }
+
+    .share-button:hover {
+        transform: scale(1.1);
+        opacity: 0.9;
+    }
+
+
+    */
 </style>
 @endpush
 
@@ -646,12 +730,12 @@
             @endif
             <p class="oneliner">{{ $quiz['oneliner'] }}</p>
             @php
-                $titleParts = explode(',', $quiz['title'], 2);
+            $titleParts = explode(',', $quiz['title'], 2);
             @endphp
             <h2 class="quiz-question-title">
                 {{ $titleParts[0] }}
                 @if (isset($titleParts[1]))
-                    <br>{{ ltrim($titleParts[1]) }}
+                <br>{{ ltrim($titleParts[1]) }}
                 @endif
             </h2>
             <!-- <h2 class="quiz-question-title">{{ $quiz['title'] }}</h2> -->
@@ -717,7 +801,7 @@
                 ${renderNavButtons()}
             `;
         }
-        
+
 
         document.getElementById('quizContent').innerHTML = html;
         updateProgressBar();
@@ -850,79 +934,187 @@
                 // .then(res => res.json())
                 .then(async (res) => {
                     const response = await res.json();
+                    response.companyLogo = $companyLogo = window.location.origin + "/uploads/0000/static/logo.png";
                     await showThankYouMessage(response);
                 })
-                .catch(() => {
+                .catch((err) => {
+                    console.error(err);
                     document.getElementById('formMsg').innerText = 'Submission failed. Please try again.';
                 });
         };
     }
 
+    // function showThankYouMessage(data) {
+    //     // Get current date formatted like "Wednesday, July 23, 2025, 11:19 PM +0545"
+    //     /* const now = new Date();
+    //     const options = {
+    //         weekday: 'long',
+    //         year: 'numeric',
+    //         month: 'long',
+    //         day: 'numeric'
+    //     };
+    //     const formattedDate = now.toLocaleString('en-US', options); */
+    //     const now = new Date();
+    //     const month = String(now.getMonth() + 1).padStart(2, '0'); // getMonth() is zero-based
+    //     const day = String(now.getDate()).padStart(2, '0');
+    //     const year = now.getFullYear();
+
+    //     const formattedDate = `${month}/${day}/${year}`;
+    //     const imgPath = window.location.origin + "/uploads/0000/static/compass.png";
+
+    //     // Helper function to truncate to 20 words
+    //     function truncateContent(contentHtml, wordLimit = 20) {
+    //         // Strip HTML tags to count words correctly
+    //         const tmp = document.createElement('div');
+    //         tmp.innerHTML = contentHtml;
+    //         const text = tmp.textContent || tmp.innerText || "";
+
+    //         const words = text.split(/\s+/).filter(w => w.length > 0);
+    //         if (words.length > wordLimit) {
+    //             return words.slice(0, wordLimit).join(' ') + '...';
+    //         }
+    //         return text;
+    //     }
+
+    //     // Now generate the HTML for these cards:
+    //     const renderedJourneys = (data.result.tours).map(journey => {
+    //         const shortContent = truncateContent(journey.content, 16);
+
+    //         // Create a URL-safe slug (example simple slugify)
+    //         const slug = journey.slug ?? journey.title.toLowerCase().replace(/[^\w]+/g, '-').replace(/(^-|-$)/g, '');
+
+    //         // return `
+    //         //     <div class="journey-card">
+    //         //         <img src="${journey.image}" loading="lazy" alt="${journey.title}" class="journey-image" />
+    //         //         <h4 class="journey-title">${journey.title}</h4>
+    //         //         <p class="journey-content">${shortContent}</p>
+    //         //         <a href="/tour/${slug}" target="_blank" class="read-more-button">Read More</a>
+    //         //     </div>
+    //         // `;
+
+    //         return `
+    //             <div class="journey-card">
+    //                 <!-- Ribbon containers -->
+    //                 <div class="ribbon ribbon-left">$ ${Math.floor(journey.sale_price)}</div>
+    //                 <div class="ribbon ribbon-right">${journey.duration} days </div>
+
+    //                 <img src="${journey.image}" alt="${journey.title}" class="journey-image" loading="lazy" />
+
+    //                 <h4 class="journey-title">${journey.title}</h4>
+
+    //                 <!-- Read More Button as Card Footer -->
+    //                 <a href="/tour/${slug}" target="_blank" class="read-more-button full-width">Read More</a>
+    //             </div>
+    //         `;
+    //     }).join('');
+
+    //     document.getElementById('quizContent').innerHTML = `
+    //     <div class="result-container">
+    //         <header class="page-header">
+    //             <span class="result-date"> Date:<span class="date-normal"> ${formattedDate}</span></span>
+    //             <span class="brand">©</span>
+    //         </header>
+    //         <div class="compass-container">
+    //             <img src="${imgPath}" alt="Compass" class="compass-icon">
+    //         </div>
+    //         <img src="${data.companyLogo}" class="logo-result" loading="lazy" />
+    //          <p class="logo-tagline">Where Alignment Begins</p>
+    //         <p class="ready-message">Your <b>Divine Blueprint </b> is Ready!</p>
+    //         <p class="daring-message">Your Are: <span> ${data.result.type} </span> </p>
+    //         <div class="element-section">
+    //             <span class="element-text">Your Element is:</span>
+    //             <span class="fire-emoji">${data.result.element} </span>
+    //         </div>
+    //         <p class="description"><b>${data.result.focus}</b> ${data.result.message} </p>
+    //         <h3 class="discover-journey">Experiences that keep you rooted amid the chaos</h3>
+    //         <div class="journeys">
+    //             ${renderedJourneys}
+    //         </div>
+    //         <footer>
+    //             <a href="https://www.trailquest.global" class="website-link"><span class="globe-icon"><i class="fa-solid fa-globe"></i></span><span class="fire-emoji" style="font-size: 20px;"></span>: www.trailquest.global</a>
+    //             <button class="share-button" id="shareStoryButton">Share Your Story</button>
+    //         </footer>
+    //     </div>
+    //     `;
+
+    //     //share and upload 
+    //     document.getElementById('shareStoryButton').addEventListener('click', async function() {
+    //         const element = document.querySelector('.result-container');
+
+    //         try {
+    //             // Capture the HTML element as canvas
+    //             const canvas = await html2canvas(element, {
+    //                 scale: 2
+    //             });
+
+    //             // Convert canvas to blob (PNG)
+    //             const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+
+    //             // Prepare the form data
+    //             const formData = new FormData();
+    //             formData.append('image', blob, 'story.png');
+
+    //             // Upload image to your backend API
+    //             const response = await fetch('{{ route("quiz.share_stories") }}', {
+    //                 method: 'POST',
+    //                 body: formData,
+    //                 headers: {
+    //                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    //                 },
+    //             });
+    //             if (!response.ok) {
+    //                 throw new Error('Upload failed');
+    //             }
+
+    //             const data = await response.json();
+
+    //             if (!data.url) {
+    //                 throw new Error('No URL returned from server');
+    //             }
+
+    //             const fullPath = window.location.origin + "/uploads/" + data.url;
+    //             // Prepare LinkedIn sharing URL with the uploaded image URL
+    //             const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(fullPath)}`;
+
+    //             // Open LinkedIn share dialog in a new window
+    //             window.open(linkedInShareUrl, '_blank', 'width=600,height=600');
+
+    //         } catch (err) {
+    //             alert('Sorry, sharing failed: ' + err.message);
+    //             console.error(err);
+    //         }
+    //     });
+    // }
     function showThankYouMessage(data) {
-        // Get current date formatted like "Wednesday, July 23, 2025, 11:19 PM +0545"
-        /* const now = new Date();
-        const options = {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        };
-        const formattedDate = now.toLocaleString('en-US', options); */
         const now = new Date();
-        const month = String(now.getMonth() + 1).padStart(2, '0'); // getMonth() is zero-based
+        const month = String(now.getMonth() + 1).padStart(2, '0');
         const day = String(now.getDate()).padStart(2, '0');
         const year = now.getFullYear();
-
         const formattedDate = `${month}/${day}/${year}`;
         const imgPath = window.location.origin + "/uploads/0000/static/compass.png";
 
-        // Helper function to truncate to 20 words
         function truncateContent(contentHtml, wordLimit = 20) {
-            // Strip HTML tags to count words correctly
             const tmp = document.createElement('div');
             tmp.innerHTML = contentHtml;
             const text = tmp.textContent || tmp.innerText || "";
-
             const words = text.split(/\s+/).filter(w => w.length > 0);
-            if (words.length > wordLimit) {
-                return words.slice(0, wordLimit).join(' ') + '...';
-            }
-            return text;
+            return words.length > wordLimit ? words.slice(0, wordLimit).join(' ') + '...' : text;
         }
 
-        // Now generate the HTML for these cards:
         const renderedJourneys = (data.result.tours).map(journey => {
             const shortContent = truncateContent(journey.content, 16);
-
-            // Create a URL-safe slug (example simple slugify)
             const slug = journey.slug ?? journey.title.toLowerCase().replace(/[^\w]+/g, '-').replace(/(^-|-$)/g, '');
-
-            // return `
-            //     <div class="journey-card">
-            //         <img src="${journey.image}" loading="lazy" alt="${journey.title}" class="journey-image" />
-            //         <h4 class="journey-title">${journey.title}</h4>
-            //         <p class="journey-content">${shortContent}</p>
-            //         <a href="/tour/${slug}" target="_blank" class="read-more-button">Read More</a>
-            //     </div>
-            // `;
-
             return `
-                <div class="journey-card">
-                    <!-- Ribbon containers -->
-                    <div class="ribbon ribbon-left">$ ${Math.floor(journey.sale_price)}</div>
-                    <div class="ribbon ribbon-right">${journey.duration} days </div>
-
-                    <img src="${journey.image}" loading="lazy" alt="${journey.title}" class="journey-image" />
-
-                    <h4 class="journey-title">${journey.title}</h4>
-
-                    <!-- Read More Button as Card Footer -->
-                    <a href="/tour/${slug}" target="_blank" class="read-more-button full-width">Read More</a>
-                </div>
-            `;
+            <div class="journey-card">
+                <div class="ribbon ribbon-left">$ ${Math.floor(journey.sale_price)}</div>
+                <div class="ribbon ribbon-right">${journey.duration} days </div>
+                <img src="${journey.image}" alt="${journey.title}" class="journey-image" loading="lazy" />
+                <h4 class="journey-title">${journey.title}</h4>
+                <a href="/tour/${slug}" target="_blank" class="read-more-button full-width">Read More</a>
+            </div>
+        `;
         }).join('');
 
-        // $companyLogo window.location.origin + "/uploads/0000/static/"
         document.getElementById('quizContent').innerHTML = `
         <div class="result-container">
             <header class="page-header">
@@ -932,38 +1124,135 @@
             <div class="compass-container">
                 <img src="${imgPath}" alt="Compass" class="compass-icon">
             </div>
-            <h1 class="logo">trail<span class="red-q">Q</span>uest</h1>
-             <p class="logo-tagline">Where Alignment Begins</p>
+            <img src="${data.companyLogo}" class="logo-result" loading="lazy" />
+            <p class="logo-tagline">Where Alignment Begins</p>
             <p class="ready-message">Your <b>Divine Blueprint </b> is Ready!</p>
-            <p class="daring-message">Your Are: <span> ${data.result.type} </span> </p>
+            <p class="daring-message">You Are: <span> ${data.result.type} </span> </p>
             <div class="element-section">
                 <span class="element-text">Your Element is:</span>
                 <span class="fire-emoji">${data.result.element} </span>
             </div>
             <p class="description"><b>${data.result.focus}</b> ${data.result.message} </p>
             <h3 class="discover-journey">Experiences that keep you rooted amid the chaos</h3>
-            <div class="journeys">
-                ${renderedJourneys}
-            </div>
-            <footer>
-                <a href="https://www.trailquest.global" class="website-link"><span class="globe-icon"><i class="fa-solid fa-globe"></i></span><span class="fire-emoji" style="font-size: 20px;"></span>: www.trailquest.global</a>
-                <button class="share-button" id="shareStoryButton">Share Your Story</button>
+            <div class="journeys">${renderedJourneys}</div>
+            <footer class="modern-footer">
+                <a href="https://www.trailquest.global" class="website-link" target="_blank">
+                    🌐 www.trailquest.global
+                </a>
+                <div class="share-container">
+                    <span class="share-label">Share Story on:</span>
+                    <button class="share-button linkedin" id="shareStoryButton" title="Share on LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                    </button>
+                    <button class="share-button facebook" id="shareStoryfb" title="Share on Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                    </button>
+                    <button class="share-button twitter" id="shareStorytw" title="Share on Twitter">
+                    <i class="fab fa-twitter"></i>
+                    </button>
+                </div>
             </footer>
         </div>
-        `;
+    `;
 
-        //share and upload 
+        // function generateShareImage() {
+        //     const element = document.querySelector('.result-container');
+        //     try {
+        //         const canvas = await html2canvas(element, {
+        //         scale: 2
+        //     });
+
+        //     // define padding (e.g., 20px all around)
+        //     const padding = 20;
+
+        //     // create a new canvas with extra space
+        //     const paddedCanvas = document.createElement("canvas");
+        //     paddedCanvas.width = canvas.width + padding * 2;
+        //     paddedCanvas.height = canvas.height + padding * 2;
+
+        //     const ctx = paddedCanvas.getContext("2d");
+
+        //     // optional: fill with background color (remove if you want transparent)
+        //     ctx.fillStyle = "#ffffff"; // or "transparent" if you want alpha
+        //     ctx.fillRect(0, 0, paddedCanvas.width, paddedCanvas.height);
+
+        //     // draw the original canvas in the center with padding
+        //     ctx.drawImage(canvas, padding, padding);
+
+        //     // Convert padded canvas to blob (PNG)
+        //     const blob = await new Promise(resolve =>
+        //         paddedCanvas.toBlob(resolve, "image/png")
+        //     );
+
+
+        //     // Prepare the form data
+        //     const formData = new FormData();
+        //     formData.append('image', blob, 'story.png');
+
+        //     // Upload image to your backend API
+        //     const response = await fetch('{{ route("quiz.share_stories") }}', {
+        //         method: 'POST',
+        //         body: formData,
+        //         headers: {
+        //             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        //         }
+        //     });
+
+        //     if (!response.ok) {
+        //         throw new Error('Upload failed');
+        //     }
+
+        //     const data = await response.json();
+
+        //     if (!data.url) {
+        //         throw new Error('No URL returned from server');
+        //     }
+
+        //     const fullPath = window.location.origin + "/uploads/" + data.url;
+        //     return fullPath;
+        //     } catch (error) {
+        //         console.error('Error generating share image:', error);
+        //     }
+        // }
+
         document.getElementById('shareStoryButton').addEventListener('click', async function() {
             const element = document.querySelector('.result-container');
-
             try {
+                // // Capture the HTML element as canvas
+                // const canvas = await html2canvas(element, {
+                //     scale: 2
+                // });
+
+                // // Convert canvas to blob (PNG)
+                // const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+
                 // Capture the HTML element as canvas
                 const canvas = await html2canvas(element, {
                     scale: 2
                 });
 
-                // Convert canvas to blob (PNG)
-                const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+                // define padding (e.g., 20px all around)
+                const padding = 20;
+
+                // create a new canvas with extra space
+                const paddedCanvas = document.createElement("canvas");
+                paddedCanvas.width = canvas.width + padding * 2;
+                paddedCanvas.height = canvas.height + padding * 2;
+
+                const ctx = paddedCanvas.getContext("2d");
+
+                // optional: fill with background color (remove if you want transparent)
+                ctx.fillStyle = "#ffffff"; // or "transparent" if you want alpha
+                ctx.fillRect(0, 0, paddedCanvas.width, paddedCanvas.height);
+
+                // draw the original canvas in the center with padding
+                ctx.drawImage(canvas, padding, padding);
+
+                // Convert padded canvas to blob (PNG)
+                const blob = await new Promise(resolve =>
+                    paddedCanvas.toBlob(resolve, "image/png")
+                );
+
 
                 // Prepare the form data
                 const formData = new FormData();
@@ -971,12 +1260,16 @@
 
                 // Upload image to your backend API
                 const response = await fetch('{{ route("quiz.share_stories") }}', {
+
                     method: 'POST',
                     body: formData,
                     headers: {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
+                    }
+
+                    ,
                 });
+
                 if (!response.ok) {
                     throw new Error('Upload failed');
                 }
@@ -994,6 +1287,125 @@
                 // Open LinkedIn share dialog in a new window
                 window.open(linkedInShareUrl, '_blank', 'width=600,height=600');
 
+                // After upload success and getting fullPath:
+                // const shareUrls = {
+                //     linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(fullPath)}`,
+                //     facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(fullPath)}`,
+                //     twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(fullPath)}&text=${encodeURIComponent('Check out this story!')}`,
+                // };
+
+                // function openShareWindow(url) {
+                //     window.open(url, '_blank', 'width=600,height=600');
+                // }
+
+                // // Create and render buttons for user
+                // const container = document.createElement('div');
+                // ['linkedin', 'facebook', 'twitter'].forEach(platform => {
+                //     const btn = document.createElement('button');
+                //     btn.textContent = `Share on ${platform.charAt(0).toUpperCase() + platform.slice(1)}`;
+                //     btn.addEventListener('click', () => openShareWindow(shareUrls[platform]));
+                //     container.appendChild(btn);
+                // });
+                // document.body.appendChild(container);
+
+            } catch (err) {
+                alert('Sorry, sharing failed: ' + err.message);
+                console.error(err);
+            }
+        });
+
+        document.getElementById('shareStoryfb').addEventListener('click', async function() {
+            const element = document.querySelector('.result-container');
+            try {
+                const canvas = await html2canvas(element, {
+                    scale: 2
+                });
+                const padding = 20;
+                const paddedCanvas = document.createElement("canvas");
+                paddedCanvas.width = canvas.width + padding * 2;
+                paddedCanvas.height = canvas.height + padding * 2;
+                const ctx = paddedCanvas.getContext("2d");
+                ctx.fillStyle = "#ffffff"; // or "transparent" if you want alpha
+                ctx.fillRect(0, 0, paddedCanvas.width, paddedCanvas.height);
+                ctx.drawImage(canvas, padding, padding);
+                const blob = await new Promise(resolve =>
+                    paddedCanvas.toBlob(resolve, "image/png")
+                );
+                const formData = new FormData();
+                formData.append('image', blob, 'story.png');
+                const response = await fetch('{{ route("quiz.share_stories") }}', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Upload failed');
+                }
+
+                const data = await response.json();
+
+                if (!data.url) {
+                    throw new Error('No URL returned from server');
+                }
+
+                const fullPath = window.location.origin + "/uploads/" + data.url;
+                // Prepare LinkedIn sharing URL with the uploaded image URL
+                const facebook = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(fullPath)}`;
+
+                // Open LinkedIn share dialog in a new window
+                window.open(facebook, '_blank', 'width=600,height=600');
+            } catch (err) {
+                alert('Sorry, sharing failed: ' + err.message);
+                console.error(err);
+            }
+        });
+
+        document.getElementById('shareStorytw').addEventListener('click', async function() {
+            const element = document.querySelector('.result-container');
+            try {
+                const canvas = await html2canvas(element, {
+                    scale: 2
+                });
+                const padding = 20;
+                const paddedCanvas = document.createElement("canvas");
+                paddedCanvas.width = canvas.width + padding * 2;
+                paddedCanvas.height = canvas.height + padding * 2;
+                const ctx = paddedCanvas.getContext("2d");
+                ctx.fillStyle = "#ffffff"; // or "transparent" if you want alpha
+                ctx.fillRect(0, 0, paddedCanvas.width, paddedCanvas.height);
+                ctx.drawImage(canvas, padding, padding);
+                const blob = await new Promise(resolve =>
+                    paddedCanvas.toBlob(resolve, "image/png")
+                );
+                const formData = new FormData();
+                formData.append('image', blob, 'story.png');
+                const response = await fetch('{{ route("quiz.share_stories") }}', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Upload failed');
+                }
+
+                const data = await response.json();
+
+                if (!data.url) {
+                    throw new Error('No URL returned from server');
+                }
+
+                const fullPath = window.location.origin + "/uploads/" + data.url;
+                // Prepare LinkedIn sharing URL with the uploaded image URL
+                const twitter = `https://twitter.com/intent/tweet?url=${encodeURIComponent(fullPath)}&text=${encodeURIComponent('Check out this story!')}`;
+
+                // Open LinkedIn share dialog in a new window
+                window.open(twitter, '_blank', 'width=600,height=600');
             } catch (err) {
                 alert('Sorry, sharing failed: ' + err.message);
                 console.error(err);
@@ -1002,5 +1414,4 @@
     }
 </script>
 @endpush
-
 @endsection
